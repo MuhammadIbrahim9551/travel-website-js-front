@@ -3,21 +3,28 @@
     "name": "Tokyo, Japan",
     "type": "city",
     "country": "Japan",
-    "imageUrl": "images/tokyo.jpg",
+    "images": ["images/tokyo1.jpg", "images/tokyo2.jpg"],
     "description": "A city where tradition meets technology."
   },
   {
     "name": "Paris, France",
     "type": "city",
     "country": "France",
-    "imageUrl": "images/paris.jpg",
+    "images": ["images/paris1.jpg", "images/paris2.jpg"],
     "description": "The city of lights and romance."
   },
   {
     "name": "Bali, Indonesia",
     "type": "beach",
     "country": "Indonesia",
-    "imageUrl": "images/bali.jpg",
+    "images": ["images/bali1.jpg", "images/bali2.jpg"],
     "description": "Tropical paradise with serene beaches."
+  },
+  {
+    "name": "Varanasi, India",
+    "type": "temple",
+    "country": "India",
+    "images": ["images/varanasi1.jpg", "images/varanasi2.jpg"],
+    "description": "Ancient city with sacred temples."
   }
 ]
