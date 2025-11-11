@@ -19,12 +19,6 @@
     "country": "Indonesia",
     "images": ["images/bali1.jpg", "images/bali2.jpg"],
     "description": "Tropical paradise with serene beaches."
-  },
-  {
-    "name": "Varanasi, India",
-    "type": "temple",
-    "country": "India",
-    "images": ["images/varanasi1.jpg", "images/varanasi2.jpg"],
-    "description": "Ancient city with sacred temples."
   }
 ]
+
