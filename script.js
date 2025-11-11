@@ -31,25 +31,27 @@ handleHash();
 document.getElementById('year').textContent = new Date().getFullYear();
 
 // ------------------ Fetch data from JSON ------------------
-// Expected JSON format: an array of objects like {
-//   "name":"Bondi Beach", "type":"beach", "country":"Australia", "imageUrl":"images/beach1.jpg", "description":"Popular surf beach"
-// }
-
 let places = [];
 fetch('https://muhammadibrahim9551.github.io/travel-website-js-front/travel_recommendation_api.json')
   .then(r => r.json())
   .then(data => {
     console.log('Fetched places:', data);
-    // ensure correct data assignment
     places = Array.isArray(data) ? data : data.destinations;
-    // preload images
+
+    // preload all images safely
     places.forEach(p => {
-      const img = new Image();
-      img.src = p.imageUrl;
+        if (p.images && p.images.length > 0) {
+            p.images.forEach(img => {
+                const image = new Image();
+                image.src = img;
+            });
+        } else if (p.imageUrl) {
+            const image = new Image();
+            image.src = p.imageUrl;
+        }
     });
   })
   .catch(err => console.error('Failed to load JSON:', err));
-
 
 // ------------------ Search logic ------------------
 const searchInput = document.getElementById('searchInput');
@@ -59,13 +61,10 @@ const resetBtn = document.getElementById('resetBtn');
 function normalizeTerm(s) { return (s || '').toLowerCase().trim(); }
 
 function matchesKeyword(place, keyword) {
-    // normalize keywords and place properties
     const k = normalizeTerm(keyword);
     if (!k) return false;
-    // Accept variations: 'beach' 'beaches' and case-insensitive
     if (k.includes('beach')) { return place.type && place.type.toLowerCase().includes('beach'); }
     if (k.includes('temple')) { return place.type && place.type.toLowerCase().includes('temple'); }
-    // otherwise treat as country/name match
     if (place.country && place.country.toLowerCase().includes(k)) return true;
     if (place.name && place.name.toLowerCase().includes(k)) return true;
     if (place.tags && place.tags.join(' ').toLowerCase().includes(k)) return true;
@@ -76,25 +75,32 @@ function renderResults(list) {
     resultsEl.innerHTML = '';
     if (!list || list.length === 0) { noResults.style.display = ''; return; }
     noResults.style.display = 'none';
-    list.forEach(p => {
-        const card = document.createElement('article'); card.className = 'card';
-        let imagesHTML = '';
-if (p.images && p.images.length > 0) {
-    imagesHTML = p.images.map(img => `<img src="${img}" alt="${p.name}" style="margin-bottom:8px">`).join('');
-} else if (p.imageUrl) {
-    imagesHTML = `<img src="${p.imageUrl}" alt="${p.name}">`;
-}
 
-card.innerHTML = `
-  ${imagesHTML}
-  <div class="body">
-    <h4>${p.name}</h4>
-    <div>${p.description || ''}</div>
-    <div class="tags">
-      <div class="tag">${p.type || ''}</div>
-      <div class="tag">${p.country || ''}</div>
-    </div>
-  </div>`;
+    list.forEach(p => {
+        const card = document.createElement('article'); 
+        card.className = 'card';
+
+        // Safe multiple images
+        let imagesHTML = '';
+        if (p.images && p.images.length > 0) {
+            imagesHTML = p.images
+                .filter(img => !!img)
+                .map(img => `<img src="${img}" alt="${p.name}" style="margin-bottom:8px">`)
+                .join('');
+        } else if (p.imageUrl) {
+            imagesHTML = `<img src="${p.imageUrl}" alt="${p.name}">`;
+        }
+
+        card.innerHTML = `
+          ${imagesHTML}
+          <div class="body">
+            <h4>${p.name}</h4>
+            <div>${p.description || ''}</div>
+            <div class="tags">
+              <div class="tag">${p.type || ''}</div>
+              <div class="tag">${p.country || ''}</div>
+            </div>
+          </div>`;
 
         resultsEl.appendChild(card);
     });
@@ -104,10 +110,8 @@ searchBtn.addEventListener('click', () => {
     const q = searchInput.value;
     const normalized = normalizeTerm(q);
     if (!normalized) { alert('Please enter a search term (e.g., beach, temple, Japan)'); return; }
-    // filter places using matchesKeyword
     const filtered = places.filter(p => matchesKeyword(p, normalized));
     renderResults(filtered);
-    // switch to Home view to show results
     location.hash = 'home';
 });
 
@@ -126,6 +130,3 @@ document.getElementById('contactForm').addEventListener('submit', e => {
 
 // keyboard: press Enter in search input triggers search
 searchInput.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); searchBtn.click(); } });
-
-
-
