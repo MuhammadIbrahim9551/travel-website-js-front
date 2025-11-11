@@ -39,11 +39,15 @@ let places = [];
 fetch('travel_recommendation_api.json')
     .then(r => r.json())
     .then(data => {
-        console.log('Fetched places:', data);
-        places = data;
-        // optionally preload thumbnails (best-effort)
-        places.forEach(p => { const img = new Image(); img.src = p.imageUrl; });
-    })
+    console.log('Fetched places:', data);
+    places = data.destinations || data; // handles both {destinations:[...]} and [...] formats
+    // optionally preload thumbnails (best-effort)
+    places.forEach(p => {
+        const img = new Image();
+        img.src = p.image || p.imageUrl; // supports either "image" or "imageUrl"
+    });
+})
+
     .catch(err => console.error('Failed to load JSON:', err));
 
 // ------------------ Search logic ------------------
@@ -113,3 +117,4 @@ document.getElementById('contactForm').addEventListener('submit', e => {
 
 // keyboard: press Enter in search input triggers search
 searchInput.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); searchBtn.click(); } });
+
