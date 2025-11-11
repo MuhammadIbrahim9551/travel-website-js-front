@@ -1,0 +1,19 @@
+{
+  "destinations": [
+    {
+      "name": "Tokyo, Japan",
+      "image": "images/tokyo.jpg",
+      "description": "A city where tradition meets technology."
+    },
+    {
+      "name": "Paris, France",
+      "image": "images/paris.jpg",
+      "description": "The city of lights and romance."
+    },
+    {
+      "name": "Bali, Indonesia",
+      "image": "images/bali.jpg",
+      "description": "Tropical paradise with serene beaches."
+    }
+  ]
+}
