@@ -3,22 +3,30 @@
     "name": "Tokyo, Japan",
     "type": "city",
     "country": "Japan",
-    "images": ["images/tokyo1.jpg", "images/tokyo2.jpg"],
+    "images": [
+      "https://muhammadibrahim9551.github.io/travel-website-js-front/images/tokyo1.jpg",
+      "https://muhammadibrahim9551.github.io/travel-website-js-front/images/tokyo2.jpg"
+    ],
     "description": "A city where tradition meets technology."
   },
   {
     "name": "Paris, France",
     "type": "city",
     "country": "France",
-    "images": ["images/paris1.jpg", "images/paris2.jpg"],
+    "images": [
+      "https://muhammadibrahim9551.github.io/travel-website-js-front/images/paris1.jpg",
+      "https://muhammadibrahim9551.github.io/travel-website-js-front/images/paris2.jpg"
+    ],
     "description": "The city of lights and romance."
   },
   {
     "name": "Bali, Indonesia",
     "type": "beach",
     "country": "Indonesia",
-    "images": ["images/bali1.jpg", "images/bali2.jpg"],
+    "images": [
+      "https://muhammadibrahim9551.github.io/travel-website-js-front/images/bali1.jpg",
+      "https://muhammadibrahim9551.github.io/travel-website-js-front/images/bali2.jpg"
+    ],
     "description": "Tropical paradise with serene beaches."
   }
 ]
-
