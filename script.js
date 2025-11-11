@@ -36,19 +36,20 @@ document.getElementById('year').textContent = new Date().getFullYear();
 // }
 
 let places = [];
-fetch('travel_recommendation_api.json')
-    .then(r => r.json())
-    .then(data => {
+fetch('https://muhammadibrahim9551.github.io/travel-website-js-front/travel_recommendation_api.json')
+  .then(r => r.json())
+  .then(data => {
     console.log('Fetched places:', data);
-    places = data.destinations || data; // handles both {destinations:[...]} and [...] formats
-    // optionally preload thumbnails (best-effort)
+    // ensure correct data assignment
+    places = Array.isArray(data) ? data : data.destinations;
+    // preload images
     places.forEach(p => {
-        const img = new Image();
-        img.src = p.image || p.imageUrl; // supports either "image" or "imageUrl"
+      const img = new Image();
+      img.src = p.imageUrl;
     });
-})
+  })
+  .catch(err => console.error('Failed to load JSON:', err));
 
-    .catch(err => console.error('Failed to load JSON:', err));
 
 // ------------------ Search logic ------------------
 const searchInput = document.getElementById('searchInput');
@@ -117,4 +118,5 @@ document.getElementById('contactForm').addEventListener('submit', e => {
 
 // keyboard: press Enter in search input triggers search
 searchInput.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); searchBtn.click(); } });
+
 
