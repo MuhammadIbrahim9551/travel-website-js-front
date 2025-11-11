@@ -35,6 +35,10 @@ let places = [];
 fetch('https://muhammadibrahim9551.github.io/travel-website-js-front/travel_recommendation_api.json')
   .then(r => r.json())
   .then(data => {
+      // Enable search only after places are loaded
+searchBtn.disabled = false;
+searchInput.disabled = false;
+
     console.log('Fetched places:', data);
     places = Array.isArray(data) ? data : data.destinations;
 
@@ -130,3 +134,4 @@ document.getElementById('contactForm').addEventListener('submit', e => {
 
 // keyboard: press Enter in search input triggers search
 searchInput.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); searchBtn.click(); } });
+
