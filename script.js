@@ -78,16 +78,24 @@ function renderResults(list) {
     noResults.style.display = 'none';
     list.forEach(p => {
         const card = document.createElement('article'); card.className = 'card';
-        card.innerHTML = `
-          <img src="${p.imageUrl}" alt="${p.name}">
-          <div class="body">
-            <h4>${p.name}</h4>
-            <div>${p.description || ''}</div>
-            <div class="tags">
-              <div class="tag">${p.type || ''}</div>
-              <div class="tag">${p.country || ''}</div>
-            </div>
-          </div>`;
+        let imagesHTML = '';
+if (p.images && p.images.length > 0) {
+    imagesHTML = p.images.map(img => `<img src="${img}" alt="${p.name}" style="margin-bottom:8px">`).join('');
+} else if (p.imageUrl) {
+    imagesHTML = `<img src="${p.imageUrl}" alt="${p.name}">`;
+}
+
+card.innerHTML = `
+  ${imagesHTML}
+  <div class="body">
+    <h4>${p.name}</h4>
+    <div>${p.description || ''}</div>
+    <div class="tags">
+      <div class="tag">${p.type || ''}</div>
+      <div class="tag">${p.country || ''}</div>
+    </div>
+  </div>`;
+
         resultsEl.appendChild(card);
     });
 }
@@ -118,5 +126,6 @@ document.getElementById('contactForm').addEventListener('submit', e => {
 
 // keyboard: press Enter in search input triggers search
 searchInput.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); searchBtn.click(); } });
+
 
 
