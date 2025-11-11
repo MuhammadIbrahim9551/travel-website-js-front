@@ -1,0 +1,416 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>WanderWise — Travel Recommendations</title>
+    <!doctype html>
+    <html lang="en">
+
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>WanderWise — Travel Recommendations</title>
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap"
+            rel="stylesheet">
+        <style>
+            :root {
+                --nav-height: 64px;
+                --accent: #0b72ff
+            }
+
+            body,
+            html {
+                height: 100%;
+                margin: 0;
+                font-family: 'Montserrat', system-ui, Segoe UI, Roboto, Helvetica, Arial
+            }
+
+            /* NAVBARS */
+            .navbar {
+                height: var(--nav-height);
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                padding: 0 16px;
+                background: #fff;
+                box-shadow: 0 1px 6px rgba(0, 0, 0, 0.08);
+                position: sticky;
+                top: 0;
+                z-index: 10
+            }
+
+            .brand {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                text-decoration: none;
+                color: inherit
+            }
+
+            .brand img {
+                height: 36px;
+                width: 36px;
+                object-fit: contain
+            }
+
+            .nav-links {
+                display: flex;
+                gap: 12px;
+                margin-left: 8px
+            }
+
+            .nav-links a {
+                color: #333;
+                text-decoration: none;
+                padding: 8px;
+                border-radius: 6px
+            }
+
+            .nav-links a.active {
+                background: rgba(11, 114, 255, 0.08);
+                color: var(--accent)
+            }
+
+            .spacer {
+                flex: 1
+            }
+
+            .search-group {
+                display: flex;
+                gap: 8px;
+                align-items: center
+            }
+
+            input[type="search"] {
+                padding: 8px 10px;
+                border: 1px solid #ddd;
+                border-radius: 6px;
+                min-width: 220px
+            }
+
+            button {
+                padding: 8px 12px;
+                border-radius: 6px;
+                border: 1px solid #0b72ff;
+                background: var(--accent);
+                color: #fff;
+                cursor: pointer
+            }
+
+            button.secondary {
+                background: #fff;
+                color: var(--accent);
+                border: 1px solid #ddd
+            }
+
+            /* PAGES */
+            main {
+                min-height: calc(100vh - var(--nav-height));
+            }
+
+            section {
+                display: none;
+                padding: 28px
+            }
+
+            section.active {
+                display: block
+            }
+
+            /* HOME hero */
+            .hero {
+                height: 70vh;
+                background-image: url('wp6705697-moutains-ultra-hd-wallpapers.jpg');
+                background-size: cover;
+                background-position: center;
+                display: flex;
+                align-items: center;
+                color: #fff;
+                padding: 40px
+            }
+
+            .hero .intro {
+                background: linear-gradient(180deg, rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35));
+                padding: 20px;
+                border-radius: 10px;
+                max-width: 720px
+            }
+
+            .hero h1 {
+                margin: 0 0 8px;
+                font-size: 40px
+            }
+
+            .hero p {
+                margin: 0 0 12px;
+                font-size: 18px
+            }
+
+            /* Results grid */
+            .results {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+                gap: 16px;
+                margin-top: 20px
+            }
+
+            .card {
+                background: #fff;
+                border-radius: 10px;
+                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+                overflow: hidden
+            }
+
+            .card img {
+                width: 100%;
+                height: 160px;
+                object-fit: cover
+            }
+
+            .card .body {
+                padding: 12px
+            }
+
+            .tags {
+                display: flex;
+                gap: 8px;
+                flex-wrap: wrap;
+                margin-top: 8px
+            }
+
+            .tag {
+                font-size: 12px;
+                padding: 6px 8px;
+                border-radius: 999px;
+                border: 1px solid #eee
+            }
+
+            /* simple footer with social icons */
+            footer {
+                padding: 18px;
+                text-align: center;
+                color: #666;
+                border-top: 1px solid #eee
+            }
+
+            /* responsive */
+            @media (max-width:600px) {
+                .hero h1 {
+                    font-size: 26px
+                }
+            }
+        </style>
+    </head>
+
+
+</html>
+</head>
+
+<body>
+    <!-- NAVBAR FOR HOME (has search) -->
+    <header class="navbar" id="nav-home">
+        <a href="#home" class="brand"><img src="Screenshot_11-11-2025_85745_img.freepik.com.jpeg"
+                alt="logo"><strong>WanderWise</strong></a>
+        <nav class="nav-links">
+            <a href="#home" data-link="home" class="active">Home</a>
+            <a href="#about" data-link="about">About Us</a>
+            <a href="#contact" data-link="contact">Contact Us</a>
+        </nav>
+        <div class="spacer"></div>
+        <div class="search-group">
+            <input id="searchInput" type="search" placeholder="Search (e.g., beach, temple, Japan)" aria-label="search">
+            <button id="searchBtn">Search</button>
+            <button id="resetBtn" class="secondary">Reset</button>
+        </div>
+    </header>
+
+    <!-- NAVBAR FOR OTHER PAGES (no search) -->
+    <header class="navbar" id="nav-simple" style="display:none">
+        <a href="#home" class="brand"><img src="Screenshot_11-11-2025_85745_img.freepik.com.jpeg" alt="logo"><strong>WanderWise</strong></a>
+        <nav class="nav-links">
+            <a href="#home" data-link="home">Home</a>
+            <a href="#about" data-link="about">About Us</a>
+            <a href="#contact" data-link="contact">Contact Us</a>
+        </nav>
+        <div class="spacer"></div>
+    </header>
+
+    <main>
+        <!-- HOME SECTION -->
+        <section id="home" class="active">
+            <div class="hero" role="img" aria-label="Scenic travel background">
+                <div class="intro">
+                    <h1>Find your next adventure</h1>
+                    <p>WanderWise curates beaches, temples and country recommendations with images and short
+                        descriptions — search by keyword to get started.</p>
+                    <div style="margin-top:12px">
+                        <!-- simple social icons (inline SVG) -->
+                        <a href="#" aria-label="facebook" style="margin-right:8px">🔵</a>
+                        <a href="#" aria-label="instagram" style="margin-right:8px">📸</a>
+                        <a href="#" aria-label="twitter">🐦</a>
+                    </div>
+                </div>
+            </div>
+
+            <section aria-label="search results">
+                <h2>Recommendations</h2>
+                <div id="results" class="results"></div>
+                <p id="no-results" style="display:none;color:#666">No results yet. Try searching "beach", "temple" or a
+                    country name like "Japan".</p>
+            </section>
+        </section>
+
+        <!-- ABOUT SECTION -->
+        <section id="about">
+            <h2>About WanderWise</h2>
+            <p>WanderWise is a small team dedicated to giving curated travel suggestions with crisp images and short
+                descriptions to help travellers decide quickly.</p>
+            <h3>Team</h3>
+            <ul>
+                <li>Dewey — Founder & Product</li>
+                <li>Huey — Lead Developer</li>
+                <li>Louie — Content & Partnerships</li>
+            </ul>
+        </section>
+
+        <!-- CONTACT SECTION -->
+        <section id="contact">
+            <h2>Contact Us</h2>
+            <form id="contactForm">
+                <div style="display:flex;flex-direction:column;gap:8px;max-width:480px">
+                    <input type="text" id="name" placeholder="Your name" required>
+                    <input type="email" id="email" placeholder="Your email" required>
+                    <textarea id="message" rows="6" placeholder="Write your message" required></textarea>
+                    <button type="submit">Submit</button>
+                </div>
+            </form>
+            <p id="contactResponse" style="display:none;color:green;margin-top:12px">Thanks! We received your message.  ^_^</p>
+        </section>
+    </main>
+
+    <footer>
+        © <span id="year"></span> WanderWise — made by Muhammad Ibrahim
+    </footer>
+
+    <script>
+        // Simple single-page navigation and navbar switching
+        const sections = document.querySelectorAll('main section');
+        const navHome = document.getElementById('nav-home');
+        const navSimple = document.getElementById('nav-simple');
+        const resultsEl = document.getElementById('results');
+        const noResults = document.getElementById('no-results');
+
+        function showSection(name) {
+            sections.forEach(s => s.classList.remove('active'));
+            const target = document.getElementById(name);
+            if (target) target.classList.add('active');
+            // show/hide navbars: search only on home
+            if (name === 'home') {
+                navHome.style.display = '';
+                navSimple.style.display = 'none';
+            } else {
+                navHome.style.display = 'none';
+                navSimple.style.display = '';
+            }
+            // update active link styles
+            document.querySelectorAll('.nav-links a').forEach(a => a.classList.toggle('active', a.getAttribute('data-link') === name));
+        }
+
+        function handleHash() {
+            const hash = location.hash.replace('#', '') || 'home';
+            showSection(hash);
+        }
+        window.addEventListener('hashchange', handleHash);
+        handleHash();
+
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // ------------------ Fetch data from JSON ------------------
+        // Expected JSON format: an array of objects like {
+        //   "name":"Bondi Beach", "type":"beach", "country":"Australia", "imageUrl":"images/beach1.jpg", "description":"Popular surf beach"
+        // }
+
+        let places = [];
+        fetch('travel_recommendation_api.json')
+            .then(r => r.json())
+            .then(data => {
+                console.log('Fetched places:', data);
+                places = data;
+                // optionally preload thumbnails (best-effort)
+                places.forEach(p => { const img = new Image(); img.src = p.imageUrl; });
+            })
+            .catch(err => console.error('Failed to load JSON:', err));
+
+        // ------------------ Search logic ------------------
+        const searchInput = document.getElementById('searchInput');
+        const searchBtn = document.getElementById('searchBtn');
+        const resetBtn = document.getElementById('resetBtn');
+
+        function normalizeTerm(s) { return (s || '').toLowerCase().trim(); }
+
+        function matchesKeyword(place, keyword) {
+            // normalize keywords and place properties
+            const k = normalizeTerm(keyword);
+            if (!k) return false;
+            // Accept variations: 'beach' 'beaches' and case-insensitive
+            if (k.includes('beach')) { return place.type && place.type.toLowerCase().includes('beach'); }
+            if (k.includes('temple')) { return place.type && place.type.toLowerCase().includes('temple'); }
+            // otherwise treat as country/name match
+            if (place.country && place.country.toLowerCase().includes(k)) return true;
+            if (place.name && place.name.toLowerCase().includes(k)) return true;
+            if (place.tags && place.tags.join(' ').toLowerCase().includes(k)) return true;
+            return false;
+        }
+
+        function renderResults(list) {
+            resultsEl.innerHTML = '';
+            if (!list || list.length === 0) { noResults.style.display = ''; return; }
+            noResults.style.display = 'none';
+            list.forEach(p => {
+                const card = document.createElement('article'); card.className = 'card';
+                card.innerHTML = `
+          <img src="${p.imageUrl}" alt="${p.name}">
+          <div class="body">
+            <h4>${p.name}</h4>
+            <div>${p.description || ''}</div>
+            <div class="tags">
+              <div class="tag">${p.type || ''}</div>
+              <div class="tag">${p.country || ''}</div>
+            </div>
+          </div>`;
+                resultsEl.appendChild(card);
+            });
+        }
+
+        searchBtn.addEventListener('click', () => {
+            const q = searchInput.value;
+            const normalized = normalizeTerm(q);
+            if (!normalized) { alert('Please enter a search term (e.g., beach, temple, Japan)'); return; }
+            // filter places using matchesKeyword
+            const filtered = places.filter(p => matchesKeyword(p, normalized));
+            renderResults(filtered);
+            // switch to Home view to show results
+            location.hash = 'home';
+        });
+
+        resetBtn.addEventListener('click', () => {
+            searchInput.value = '';
+            resultsEl.innerHTML = '';
+            noResults.style.display = '';
+        });
+
+        // ------------------ Contact form (demo) ------------------
+        document.getElementById('contactForm').addEventListener('submit', e => {
+            e.preventDefault();
+            document.getElementById('contactResponse').style.display = '';
+            e.target.reset();
+        });
+
+        // keyboard: press Enter in search input triggers search
+        searchInput.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); searchBtn.click(); } });
+    </script>
+</body>
+
+</html>
