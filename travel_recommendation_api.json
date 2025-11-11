@@ -1,0 +1,23 @@
+[
+  {
+    "name": "Tokyo, Japan",
+    "type": "city",
+    "country": "Japan",
+    "imageUrl": "images/tokyo.jpg",
+    "description": "A city where tradition meets technology."
+  },
+  {
+    "name": "Paris, France",
+    "type": "city",
+    "country": "France",
+    "imageUrl": "images/paris.jpg",
+    "description": "The city of lights and romance."
+  },
+  {
+    "name": "Bali, Indonesia",
+    "type": "beach",
+    "country": "Indonesia",
+    "imageUrl": "images/bali.jpg",
+    "description": "Tropical paradise with serene beaches."
+  }
+]
